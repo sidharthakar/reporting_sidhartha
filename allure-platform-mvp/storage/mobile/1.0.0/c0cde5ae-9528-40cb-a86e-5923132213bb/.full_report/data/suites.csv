@@ -1,0 +1,3 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"Validation Of Input and OutPut Value","2658","input_output_Value_validation","All Test Suite","2025-12-05","passed","2025-12-05","BitGo.BitcoinExplorer","AssesmentTest","BitGo.BitcoinExplorer","input_output_Value_validation"
+"Validation Of Header","135","heading_Validate","All Test Suite","2025-12-05","passed","2025-12-05","BitGo.BitcoinExplorer","AssesmentTest","BitGo.BitcoinExplorer","heading_Validate"
