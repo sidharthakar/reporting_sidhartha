@@ -1,0 +1,8 @@
+io/allure/platform/AllurePlatformApplication.class
+io/allure/platform/repo/RunRepository.class
+io/allure/platform/controller/UploadController.class
+io/allure/platform/config/AwsConfig.class
+io/allure/platform/controller/AdminController.class
+io/allure/platform/model/RunMeta.class
+io/allure/platform/service/ReportService.class
+io/allure/platform/config/WebConfig.class
