@@ -1,181 +1,202 @@
-document.addEventListener("DOMContentLoaded", () => {
+let analyticsChart;
+const $ = id => document.getElementById(id);
+const n = v => v == null ? 0 : Number(v);
 
-  function showMessage(text, type = "success", timeout = 2500) {
-    const t = document.getElementById("toast");
-    t.textContent = text;
-    t.className = "toast " + (type === "error" ? "error" : "success");
-    t.classList.remove("hidden");
-    clearTimeout(showMessage._hid);
-    showMessage._hid = setTimeout(() => t.classList.add("hidden"), timeout);
+function toast(msg){
+  const t = $("toast");
+  t.textContent = msg;
+  t.classList.remove("hidden");
+  setTimeout(()=>t.classList.add("hidden"),2000);
+}
+
+/* ---------- Sidebar ---------- */
+$("openAnalytics").onclick = () => {
+  $("reportViewer").classList.add("hidden");
+  $("analyticsSection").classList.toggle("hidden");
+};
+
+/* ---------- Upload ---------- */
+$("uploadBtn").onclick = async ()=>{
+  const fd = new FormData();
+
+  const execDate = $("executionDate").value;
+  if (!execDate) return toast("Select execution date");
+
+  fd.append("appId", $("appId").value);
+  fd.append("release", $("release").value);
+  fd.append("executionDate", execDate);
+  fd.append("file", $("zipfile").files[0]);
+
+  const r = await fetch("/api/upload", { method:"POST", body:fd });
+
+  if (r.ok) {
+    toast("Uploaded");
+
+    // ✅ Clear form
+    $("appId").value = "";
+    $("release").value = "";
+    $("executionDate").value = "";
+    $("zipfile").value = "";
+
+    loadApps();
+    loadAnalyticsApps();
+  }
+};
+/* ---------- Load Chart ---------- */
+$("loadChart").onclick = async ()=>{
+  analyticsChart?.destroy();
+
+  const app=$("analyticsApp").value;
+  if(!app) return toast("Select App");
+
+  const from = $("fromDate").value;
+  const to = $("toDate").value;
+  if (!from || !to) return toast("Select From and To dates");
+
+  if($("chartType").value==="appOverview"){
+    const d = await (await fetch(
+      `/api/charts/app?appId=${app}&from=${from}&to=${to}`
+    )).json();
+    drawOverview(d); return;
   }
 
-  function safeText(v) { return v == null ? "" : String(v); }
+  let url=`/api/charts/release?appId=${app}&release=${$("analyticsRelease").value}&from=${from}&to=${to}`;
+  drawTrend(await (await fetch(url)).json());
+};
 
-  const appIdInput = document.getElementById("appId");
-  const releaseInput = document.getElementById("release");
-  const zipInput = document.getElementById("zipfile");
-  const uploadBtn = document.getElementById("uploadBtn");
-  const loader = document.getElementById("uploadLoader");
 
-  const appsSelect = document.getElementById("apps");
-  const releasesSelect = document.getElementById("releases");
-  const loadRunsBtn = document.getElementById("loadRuns");
-  const runsTableBody = document.querySelector("#runsTable tbody");
+/* ---------- Dashboard ---------- */
+async function loadApps(){
+  const apps = await (await fetch("/api/apps")).json();
+  $("apps").innerHTML = `<option></option>`+apps.map(a=>`<option>${a}</option>`).join("");
+}
+loadApps();
 
-  const viewer = document.getElementById("reportViewer");
-  const viewerFrame = document.getElementById("reportFrame");
-  const viewerClose = document.getElementById("closeViewer");
-  const viewerDownload = document.getElementById("downloadReportLink");
+$("apps").onchange = async ()=>{
+  const rel = await (await fetch(`/api/releases?appId=${$("apps").value}`)).json();
+  $("releases").innerHTML = `<option></option>`+rel.map(r=>`<option>${r}</option>`).join("");
+};
 
-  if (!appsSelect || !releasesSelect || !uploadBtn || !loadRunsBtn) {
-    console.error("Required DOM elements missing");
-    return;
+$("loadRuns").onclick = async ()=>{
+  let url=`/api/runs?appId=${$("apps").value}`;
+  if($("releases").value) url+=`&release=${$("releases").value}`;
+
+  const runs = await (await fetch(url)).json();
+  $("runsTable").querySelector("tbody").innerHTML =
+    runs.map(r=>`
+      <tr>
+        <td>${r.runId}</td>
+        <td>${r.timestamp}</td>
+        <td>${r.passed}</td>
+        <td>${r.failed}</td>
+        <td>${r.broken}</td>
+        <td>${r.skipped}</td>
+        <td>${r.total}</td>
+        <td>${r.durationMs}</td>
+        <td><button data-k="${encodeURIComponent(r.htmlPath)}">View</button></td>
+      </tr>`).join("");
+
+  document.querySelectorAll("button[data-k]").forEach(b=>{
+    b.onclick=async()=>{
+      $("reportViewer").classList.remove("hidden");
+      $("reportFrame").srcdoc = await (await fetch(`/api/view?key=${b.dataset.k}`)).text();
+      $("downloadReportLink").href=`/api/download?key=${b.dataset.k}`;
+    }
+  });
+};
+
+/* ---------- Analytics ---------- */
+async function loadAnalyticsApps(){
+  const apps = await (await fetch("/api/apps")).json();
+  $("analyticsApp").innerHTML = `<option></option>`+apps.map(a=>`<option>${a}</option>`).join("");
+}
+loadAnalyticsApps();
+
+$("analyticsApp").onchange = async ()=>{
+  const rel = await (await fetch(`/api/releases?appId=${$("analyticsApp").value}`)).json();
+  $("analyticsRelease").innerHTML = `<option></option>`+rel.map(r=>`<option>${r}</option>`).join("");
+};
+
+$("chartType").onchange = ()=>{
+  $("analyticsRelease").disabled = $("chartType").value==="appOverview";
+};
+
+$("loadChart").onclick = async ()=>{
+  analyticsChart?.destroy();
+
+  const app = $("analyticsApp").value;
+  if (!app) return toast("Select App");
+
+  const from = $("fromDate").value;
+  const to = $("toDate").value;
+
+  if (!from || !to) {
+    return toast("Select From and To dates");
   }
 
-  viewer.classList.add("hidden");
+  if ($("chartType").value === "appOverview") {
+    const res = await fetch(
+      `/api/charts/app?appId=${app}&from=${from}&to=${to}`
+    );
 
-  uploadBtn.addEventListener("click", async () => {
-    const appId = appIdInput.value.trim();
-    const release = releaseInput.value.trim();
-    const file = zipInput.files[0];
-
-    if (!appId || !release || !file) {
-      showMessage("AppId, Release & ZIP required", "error");
+    if (!res.ok) {
+      toast("No data for selected range");
       return;
     }
 
-    loader.classList.remove("hidden");
+    const d = await res.json();
+    if (!Array.isArray(d)) return toast("Invalid data");
 
-    const fd = new FormData();
-    fd.append("appId", appId);
-    fd.append("release", release);
-    fd.append("file", file);
-
-    try {
-      const res = await fetch("/api/upload", { method: "POST", body: fd });
-      const json = await res.json();
-
-      if (res.ok && !json.error) {
-        showMessage("Upload successful", "success");
-        appIdInput.value = "";
-        releaseInput.value = "";
-        zipInput.value = "";
-        await loadApps();
-      } else {
-        const err = json && json.error ? json.error : `Upload failed (${res.status})`;
-        showMessage(err, "error");
-      }
-    } catch (e) {
-      console.error(e);
-      showMessage("Upload failed (network)", "error");
-    } finally {
-      loader.classList.add("hidden");
-    }
-  });
-
-  async function loadApps() {
-    try {
-      const res = await fetch("/api/apps");
-      if (!res.ok) { showMessage("Failed to load apps", "error"); return; }
-      const apps = await res.json();
-      appsSelect.innerHTML = `<option value="">--select--</option>`;
-      apps.forEach(a => {
-        const o = document.createElement("option");
-        o.value = a;
-        o.textContent = a;
-        appsSelect.appendChild(o);
-      });
-      releasesSelect.innerHTML = `<option value="">--select--</option>`;
-      runsTableBody.innerHTML = "";
-      viewer.classList.add("hidden");
-    } catch (e) {
-      console.error(e);
-      showMessage("Failed to load apps", "error");
-    }
+    drawOverview(d);
+    return;
   }
 
-  appsSelect.addEventListener("change", async () => {
-    const app = appsSelect.value;
-    releasesSelect.innerHTML = `<option value="">--select--</option>`;
-    runsTableBody.innerHTML = "";
-    viewer.classList.add("hidden");
-    if (!app) return;
-    try {
-      const res = await fetch("/api/releases?appId=" + encodeURIComponent(app));
-      if (!res.ok) { showMessage("Failed to load releases", "error"); return; }
-      const rels = await res.json();
-      rels.forEach(r => {
-        const o = document.createElement("option");
-        o.value = r;
-        o.textContent = r;
-        releasesSelect.appendChild(o);
-      });
-    } catch (e) {
-      console.error(e);
-      showMessage("Failed to load releases", "error");
-    }
-  });
+  const release = $("analyticsRelease").value;
+  if (!release) return toast("Select Release");
 
-  loadRunsBtn.addEventListener("click", async () => {
-    const app = appsSelect.value;
-    const rel = releasesSelect.value;
-    if (!app || !rel) { showMessage("Select app and release", "error"); return; }
+  const res = await fetch(
+    `/api/charts/release?appId=${app}&release=${release}&from=${from}&to=${to}`
+  );
 
-    try {
-      const res = await fetch(`/api/runs?appId=${encodeURIComponent(app)}&release=${encodeURIComponent(rel)}`);
-      if (!res.ok) { showMessage("Failed to load runs", "error"); return; }
-      const runs = await res.json();
-      runsTableBody.innerHTML = "";
-      viewer.classList.add("hidden");
-
-      runs.forEach(r => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${safeText(r.runId)}</td>
-          <td>${safeText(r.timestamp)}</td>
-          <td>${safeText(r.passed)}</td>
-          <td>${safeText(r.failed)}</td>
-          <td>${safeText(r.broken)}</td>
-          <td>${safeText(r.skipped)}</td>
-          <td>${safeText(r.total)}</td>
-          <td>${safeText(r.durationMs)}</td>
-          <td>
-            <button class="view-btn" data-path="${encodeURIComponent(r.htmlPath)}">View</button>
-            <a class="btn-download" href="/api/download?key=${encodeURIComponent(r.htmlPath)}">Download</a>
-          </td>`;
-        runsTableBody.appendChild(tr);
-      });
-
-      document.querySelectorAll(".view-btn").forEach(b => {
-        b.addEventListener("click", async () => {
-          const p = decodeURIComponent(b.getAttribute("data-path"));
-          openViewer(p);
-        });
-      });
-    } catch (e) {
-      console.error(e);
-      showMessage("Failed to load runs", "error");
-    }
-  });
-
-  async function openViewer(path) {
-    viewer.classList.remove("hidden");
-    viewerDownload.href = "/api/download?key=" + encodeURIComponent(path);
-    try {
-      const res = await fetch("/api/view?key=" + encodeURIComponent(path));
-      if (!res.ok) { viewerFrame.srcdoc = `<p>Report not found (${res.status})</p>`; return; }
-      const html = await res.text();
-      viewerFrame.srcdoc = html;
-    } catch (e) {
-      console.error(e);
-      viewerFrame.srcdoc = `<p>Failed to load report</p>`;
-    }
+  if (!res.ok) {
+    toast("No data for selected range");
+    return;
   }
 
-  viewerClose.addEventListener("click", () => {
-    viewer.classList.add("hidden");
-  });
+  const d = await res.json();
+  if (!Array.isArray(d)) return toast("Invalid data");
 
-  // init
-  loadApps();
-});
+  drawTrend(d);
+};
+
+
+function drawTrend(d){
+  analyticsChart = new Chart($("analyticsChart"),{
+    type:"bar",
+    data:{
+      labels:d.map(x=>x.execution_date),
+      datasets:[
+        {label:"Passed",data:d.map(x=>n(x.passed)),backgroundColor:"#4caf50"},
+        {label:"Failed",data:d.map(x=>n(x.failed)),backgroundColor:"#f44336"},
+        {label:"Broken",data:d.map(x=>n(x.broken)),backgroundColor:"#ff9800"},
+        {label:"Skipped",data:d.map(x=>n(x.skipped)),backgroundColor:"#9e9e9e"}
+      ]
+    },
+    options:{scales:{x:{stacked:true},y:{stacked:true}}}
+  });
+}
+
+function drawOverview(d){
+  analyticsChart = new Chart($("analyticsChart"),{
+    type:"bar",
+    data:{
+      labels:d.map(x=>x.release),
+      datasets:[
+        {label:"Pass %",data:d.map(x=>Math.round(x.passPercent)),backgroundColor:"#4caf50"},
+        {label:"Failed",data:d.map(x=>x.failed),backgroundColor:"#f44336"},
+        {label:"Broken",data:d.map(x=>x.broken),backgroundColor:"#ff9800"},
+        {label:"Skipped",data:d.map(x=>x.skipped),backgroundColor:"#9e9e9e"}
+      ]
+    }
+  });
+}

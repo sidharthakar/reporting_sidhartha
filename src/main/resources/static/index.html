@@ -2,81 +2,53 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Allure Dashboard - MVP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Allure Dashboard</title>
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- App CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
-
 <aside class="sidebar">
-    <div class="sidebar-inner">
-        <div class="logo-mini">
-            <span>Effitest</span>
-        </div>
-
-        <nav>
-            <ul>
-                <li class="active">Dashboard</li>
-            </ul>
-        </nav>
-    </div>
+    <div class="logo-mini">LimeLight</div>
+    <ul>
+        <li class="active">Dashboard</li>
+        <li id="openAnalytics">Analytics</li>
+    </ul>
 </aside>
 
 <main class="main-content">
 
-    <header class="center-header card">
-        <div class="center-header-inner">
-            <img src="/assets/logo.png" class="logo-large" alt="logo">
-            <div class="app-title">Allure Dashboard - MVP</div>
-            <div class="app-sub">Centralized Allure reports</div>
-        </div>
+    <header class="card center-header">
+        <img src="/assets/loggo.png" class="company-logo"/>
+        <div class="app-title">Allure Dashboard</div>
+        <div class="app-sub">Centralized Allure Reports</div>
     </header>
 
-    <section class="card upload-card">
-        <form id="uploadForm" onsubmit="return false;">
-            <div class="form-row">
-                <label>App ID
-                    <input id="appId" placeholder="e.g. mobile-app" />
-                </label>
-
-                <label>Release
-                    <input id="release" placeholder="e.g. 1.0.0" />
-                </label>
-
-                <label>Allure ZIP
-                    <input type="file" id="zipfile" accept=".zip" />
-                </label>
-
-                <button id="uploadBtn" class="primary" type="button">Upload</button>
-            </div>
-        </form>
-        <div id="uploadLoader" class="loader hidden" aria-hidden="true"></div>
+    <section class="card">
+        <div class="form-row">
+            <label>App ID <input id="appId"></label>
+            <label>Release <input id="release"></label>
+            <label>Execution Date <input type="date" id="executionDate"></label>
+            <label>Allure ZIP <input type="file" id="zipfile"></label>
+            <button id="uploadBtn" class="primary">Upload</button>
+        </div>
     </section>
 
     <section class="card">
         <div class="filters">
-            <label>Apps
-                <select id="apps"></select>
-            </label>
-
-            <label>Releases
-                <select id="releases"></select>
-            </label>
-
+            <label>App <select id="apps"></select></label>
+            <label>Release <select id="releases"></select></label>
             <button id="loadRuns" class="secondary">Load Runs</button>
         </div>
 
-        <div class="table-wrapper card">
+        <div class="table-wrapper">
             <table id="runsTable">
                 <thead>
                 <tr>
-                    <th>Run ID</th><th>Date</th><th>Passed</th><th>Failed</th>
-                    <th>Broken</th><th>Skipped</th><th>Total</th><th>Duration</th><th>Actions</th>
+                    <th>Run</th><th>Date</th><th>PASS</th><th>FAIL</th><th>BROKEN</th><th>SKIP</th><th>Total</th><th>Duration</th><th></th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -86,21 +58,46 @@
 
     <section id="reportViewer" class="card hidden">
         <div class="viewer-header">
-            <div id="viewerTitle">Report</div>
-            <div>
-                <button id="closeViewer" class="secondary">Close</button>
-                <a id="downloadReportLink" class="btn-download" href="#" download>Download</a>
-            </div>
+            <button id="closeViewer" class="secondary">Close</button>
+            <a id="downloadReportLink" class="btn-download">Download</a>
         </div>
-        <iframe id="reportFrame" title="Allure report"></iframe>
+        <iframe id="reportFrame"></iframe>
+    </section>
+
+    <section id="analyticsSection" class="card hidden">
+        <h3>📊 Analytics</h3>
+
+        <div class="filters">
+            <label>Chart
+                <select id="chartType">
+                    <option value="releaseTrend">Release Trend</option>
+                    <option value="appOverview">App Overview</option>
+                </select>
+            </label>
+
+            <label>App
+                <select id="analyticsApp"></select>
+            </label>
+
+            <label>Release
+                <select id="analyticsRelease">
+                    <option value="">All</option>
+                </select>
+            </label>
+            <label>From <input type="date" id="fromDate"></label>
+            <label>To <input type="date" id="toDate"></label>
+
+            <button id="loadChart" class="primary">Load</button>
+        </div>
+
+        <div class="chart-box">
+            <canvas id="analyticsChart"></canvas>
+        </div>
     </section>
 
 </main>
 
-<!-- Notification container (vanilla) -->
-<div id="toast" class="toast hidden"></div>
-
-<!-- App JS -->
+<div id="toast" class="hidden"></div>
 <script src="/js/app.js"></script>
 </body>
 </html>

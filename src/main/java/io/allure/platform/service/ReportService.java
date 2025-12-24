@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Stream;
@@ -51,7 +52,7 @@ public class ReportService {
     }
 
     // ---------------- MAIN UPLOAD ----------------
-    public Map<String, Object> handleUpload(String appId, String release, MultipartFile file) throws Exception {
+    public Map<String, Object> handleUpload(String appId, String release, String executionDate, MultipartFile file) throws Exception {
         String runId = UUID.randomUUID().toString();
 
         Path runFolder;
@@ -80,6 +81,7 @@ public class ReportService {
         RunMeta meta = new RunMeta();
         meta.setRunId(runId);
         meta.setAppId(appId);
+        meta.setExecutionDate(LocalDate.parse(executionDate));
         meta.setRelease(release);
         meta.setTimestamp(LocalDateTime.now());
         meta.setPassed((int) stats.getOrDefault("passed", 0));

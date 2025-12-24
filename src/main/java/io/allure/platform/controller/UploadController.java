@@ -40,17 +40,28 @@ public class UploadController {
     }
 
     @PostMapping(value="/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> upload(@RequestParam String appId,
-                                    @RequestParam String release,
-                                    @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> upload(
+            @RequestParam String appId,
+            @RequestParam String release,
+            @RequestParam String executionDate,
+            @RequestParam("file") MultipartFile file) {
+
+        if (executionDate == null || executionDate.isBlank()) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Execution date is required"));
+        }
+
         try {
-            Map<String, Object> resp = reportService.handleUpload(appId, release, file);
+            Map<String, Object> resp =
+                    reportService.handleUpload(appId, release, executionDate, file);
             return ResponseEntity.ok(resp);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(Map.of("error", e.getMessage()));
         }
     }
+
+
 
     @GetMapping("/apps")
     public ResponseEntity<List<String>> apps() {

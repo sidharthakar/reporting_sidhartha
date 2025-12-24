@@ -1,5 +1,6 @@
 package io.allure.platform.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class RunMeta {
@@ -15,6 +16,7 @@ public class RunMeta {
     private long durationMs;
     private String htmlPath;
     private String historyPath;
+    private LocalDate executionDate;
 
     public String getRunId() { return runId; }
     public void setRunId(String runId) { this.runId = runId; }
@@ -40,4 +42,7 @@ public class RunMeta {
     public void setHtmlPath(String htmlPath) { this.htmlPath = htmlPath; }
     public String getHistoryPath() { return historyPath; }
     public void setHistoryPath(String historyPath) { this.historyPath = historyPath; }
+    public LocalDate getExecutionDate() {return executionDate;}
+    public void setExecutionDate(LocalDate executionDate) {this.executionDate = executionDate;}
+
 }
