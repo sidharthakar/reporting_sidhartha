@@ -1,33 +1,301 @@
-<h1 align="center">Hi 👋, I'm Sidhartha Kar</h1>
-<h3 align="center">A passionate QA from India</h3>
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=sidharthakar&label=Profile%20views&color=0e75b6&style=flat" alt="sidharthakar" /> </p>
+# 🚀 Centralized Allure Reporting Platform
 
-<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=sidharthakar" alt="sidharthakar" /></a> </p>
-
-- 🔭 I’m currently working on [Centralized Reporting System](https://github.com/sidharthakar/reporting_sidhartha)
-
-- 🌱 I’m currently learning **AI ans Devops**
-
-- 👯 I’m looking to collaborate on **Centralized Reporting System**
-
-- 🤝 I’m looking for help with **Make it better and usable org wide with on prem**
-
-- 👨‍💻 All of my projects are available at [https://github.com/sidharthakar/](https://github.com/sidharthakar/)
-
-- 💬 Ask me about **QA**
-
-- 📫 How to reach me **sidharthashankarkar@gmail.com**
-
-- 📄 Know about my experiences [Coming soon](Coming soon)
-
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/in/sidhartha-kar-sde/" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="in/sidhartha-kar-sde/" height="30" width="40" /></a>
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success?style=flat" />
+  <img src="https://img.shields.io/badge/Backend-SpringBoot-blue" />
+  <img src="https://img.shields.io/badge/Frontend-VanillaJS-yellow" />
+  <img src="https://img.shields.io/badge/Storage-S3-orange" />
+  <img src="https://img.shields.io/badge/Deployment-Docker%20%7C%20ECR-blueviolet" />
 </p>
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://aws.amazon.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="aws" width="40" height="40"/> </a> <a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" alt="azure" width="40" height="40"/> </a> <a href="https://www.chartjs.org" target="_blank" rel="noreferrer"> <img src="https://www.chartjs.org/media/logo-title.svg" alt="chartjs" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://golang.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" alt="go" width="40" height="40"/> </a> <a href="https://grafana.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/grafana/grafana-icon.svg" alt="grafana" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://www.jenkins.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/jenkins/jenkins-icon.svg" alt="jenkins" width="40" height="40"/> </a> <a href="https://kubernetes.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noreferrer"> <img src="https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg" alt="mssql" width="40" height="40"/> </a> <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://redis.io" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redis/redis-original-wordmark.svg" alt="redis" width="40" height="40"/> </a> <a href="https://scikit-learn.org/" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="40" height="40"/> </a> <a href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40"/> </a> <a href="https://www.selenium.dev" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/detain/svg-logos/780f25886640cef088af994181646db2f6b1a3f8/svg/selenium-logo.svg" alt="selenium" width="40" height="40"/> </a> </p>
+---
 
-<h3 align="left">Support:</h3>
-<p><a href="https://ko-fi.com/Sid"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="Sid" /></a></p><br><br>
+## 📌 Project Overview
+
+**Centralized Allure Reporting System** is a scalable, self-hosted solution to **upload, store, visualize, and analyze Allure test reports** across multiple applications and releases.
+
+It is designed for:
+
+* QA teams
+* Automation engineers
+* DevOps teams
+* Organizations needing centralized test visibility
+
+---
+
+## 🎯 Key Features
+
+✅ Upload Allure ZIP reports
+✅ Store reports in **S3 / Local filesystem**
+✅ Auto-generate **Allure HTML reports**
+✅ **Execution-date–based analytics**
+✅ App-level & Release-level filtering
+✅ Historical trend comparison
+✅ Secure API-based access
+✅ Works with **Docker + AWS (ECR / S3)**
+✅ Clean UI (HTML + JS + Chart.js)
+
+---
+
+## 🧩 Architecture Overview
+
+```
+┌──────────────┐
+│  Test Runner │
+│ (CI / Local) │
+└──────┬───────┘
+       │ ZIP Upload
+       ▼
+┌─────────────────────────┐
+│  Spring Boot API Server │
+│  - Upload API           │
+│  - Analytics Engine     │
+│  - Report Generator     │
+└──────┬──────────────────┘
+       │
+       ▼
+┌───────────────┐        ┌──────────────────┐
+│  AWS S3       │◀──────▶│  Local Storage   │
+│  (Reports)    │        │  (Optional)      │
+└───────────────┘
+       │
+       ▼
+┌──────────────────────┐
+│   Web Dashboard UI   │
+│ (Charts + Viewer)    │
+└──────────────────────┘
+```
+
+---
+
+## 🧪 Features in Detail
+
+### 📤 Upload
+
+* Upload zipped **Allure results**
+* Choose:
+
+    * App Name
+    * Release
+    * Execution Date
+* Auto-generates:
+
+    * HTML report
+    * Trend data
+    * Historical linkage
+
+---
+
+### 📊 Analytics
+
+* App-level overview
+* Release-level trends
+* Date range filtering
+* Chart types:
+
+    * Passed / Failed / Broken / Skipped
+    * Pass percentage
+
+---
+
+### 📁 Report Management
+
+* View report directly in browser
+* Download HTML
+* Delete:
+
+    * Single run
+    * Entire release
+    * Entire application
+
+---
+
+## 🧠 Tech Stack
+
+### Backend
+
+* **Java 17**
+* **Spring Boot**
+* **Spring Web**
+* **JDBC (SQLite / RDS)**
+* **AWS SDK (S3)**
+
+### Frontend
+
+* HTML
+* CSS
+* Vanilla JavaScript
+* Chart.js
+
+### Infra
+
+* Docker
+* AWS ECR
+* AWS S3
+* (Optional) ECS / EC2
+
+---
+
+## 📂 Project Structure
+
+```
+.
+├── src/main/java
+│   ├── controller
+│   │   ├── UploadController.java
+│   │   ├── ChartController.java
+│   │   └── AdminController.java
+│   ├── service
+│   │   └── ReportService.java
+│   ├── repo
+│   │   └── RunRepository.java
+│   └── model
+│       └── RunMeta.java
+│
+├── src/main/resources
+│   ├── static/
+│   │   ├── index.html
+│   │   ├── app.js
+│   │   └── style.css
+│   └── application.yml
+│
+└── Dockerfile
+```
+
+---
+
+## 🧪 API Endpoints
+
+### Upload Report
+
+```http
+POST /api/upload
+```
+
+**Params:**
+
+* `appId`
+* `release`
+* `executionDate`
+* `file` (zip)
+
+---
+
+### Fetch Data
+
+```http
+GET /api/apps
+GET /api/releases?appId=xyz
+GET /api/runs?appId=xyz&release=1.0
+```
+
+---
+
+### Analytics
+
+```http
+GET /api/charts/app?appId=app&from=2024-01-01&to=2024-01-31
+GET /api/charts/release?appId=app&release=v1&from=2024-01-01&to=2024-01-31
+```
+
+---
+
+### Delete APIs
+
+```http
+DELETE /api/admin/run/{runId}
+DELETE /api/admin/release?appId=xyz&release=v1
+DELETE /api/admin/app/{appId}
+```
+
+---
+
+## 🐳 Docker Setup
+
+```dockerfile
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY target/*.jar app.jar
+EXPOSE 7328
+ENTRYPOINT ["java","-jar","/app/app.jar"]
+```
+
+---
+
+## ☁️ Deployment Options
+
+| Method            | Recommended    |
+| ----------------- | -------------- |
+| Local Docker      | ✅              |
+| EC2 + Docker      | ✅              |
+| ECS + Fargate     | ⭐ Best         |
+| Elastic Beanstalk | ✅              |
+| Lambda            | ❌ Not suitable |
+
+---
+
+## 🌐 Access App
+
+If running locally:
+
+```
+http://localhost:7328
+```
+
+If deployed on EC2/ECS:
+
+```
+http://<public-ip>:7328
+```
+
+With ALB:
+
+```
+https://<alb-dns-name>
+```
+
+---
+
+## 🔐 Security Notes
+
+* Add authentication if exposed publicly
+* Use HTTPS via ALB
+* Restrict S3 bucket access
+* Avoid public write permissions
+
+---
+
+## 👨‍💻 Author
+
+**Sidhartha Kar**
+QA | Automation | DevOps Enthusiast
+
+🔗 GitHub: [https://github.com/sidharthakar](https://github.com/sidharthakar)
+🔗 LinkedIn: [https://linkedin.com/in/sidhartha-kar-sde](https://linkedin.com/in/sidhartha-kar-sde)
+
+---
+
+## ⭐ Support
+
+If this project helped you, please ⭐ star the repository!
+
+---
+
+## 📌 Future Enhancements
+
+* Role-based access
+* OAuth login
+* Multi-tenant support
+* Test trend AI insights
+* Slack / Email notifications
+
+---
+
+If you want, I can also:
+✅ Add **architecture diagram**
+✅ Convert this to **MkDocs / GitBook**
+✅ Optimize for **GitHub SEO**
+✅ Add **CI/CD pipeline yaml**
+
+Just tell me 👍
