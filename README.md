@@ -280,22 +280,7 @@ QA | Automation | DevOps Enthusiast
 
 If this project helped you, please ⭐ star the repository!
 
----
 
-## 📌 Future Enhancements
 
-* Role-based access
-* OAuth login
-* Multi-tenant support
-* Test trend AI insights
-* Slack / Email notifications
 
----
 
-If you want, I can also:
-✅ Add **architecture diagram**
-✅ Convert this to **MkDocs / GitBook**
-✅ Optimize for **GitHub SEO**
-✅ Add **CI/CD pipeline yaml**
-
-Just tell me 👍

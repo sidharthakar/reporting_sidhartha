@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Allure Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<aside class="sidebar">
+    <div class="logo-mini">LimeLight</div>
+    <ul>
+        <li class="active">Dashboard</li>
+        <li id="openAnalytics">Analytics</li>
+    </ul>
+</aside>
+
+<main class="main-content">
+
+    <header class="card center-header">
+        <img src="/assets/loggo.png" class="company-logo"/>
+        <div class="app-title">Allure Dashboard</div>
+        <div class="app-sub">Centralized Allure Reports</div>
+    </header>
+
+    <section class="card">
+        <div class="form-row">
+            <label>App ID <input id="appId"></label>
+            <label>Release <input id="release"></label>
+            <label>Execution Date <input type="date" id="executionDate"></label>
+            <label>Allure ZIP <input type="file" id="zipfile"></label>
+            <button id="uploadBtn" class="primary">Upload</button>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="filters">
+            <label>App <select id="apps"></select></label>
+            <label>Release <select id="releases"></select></label>
+            <button id="loadRuns" class="secondary">Load Runs</button>
+        </div>
+
+        <div class="table-wrapper">
+            <table id="runsTable">
+                <thead>
+                <tr>
+                    <th>Run</th><th>Date</th><th>PASS</th><th>FAIL</th><th>BROKEN</th><th>SKIP</th><th>Total</th><th>Duration</th><th></th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="reportViewer" class="card hidden">
+        <div class="viewer-header">
+            <button id="closeViewer" class="secondary">Close</button>
+            <a id="downloadReportLink" class="btn-download">Download</a>
+        </div>
+        <iframe id="reportFrame"></iframe>
+    </section>
+
+    <section id="analyticsSection" class="card hidden">
+        <h3>📊 Analytics</h3>
+
+        <div class="filters">
+            <label>Chart
+                <select id="chartType">
+                    <option value="releaseTrend">Release Trend</option>
+                    <option value="appOverview">App Overview</option>
+                </select>
+            </label>
+
+            <label>App
+                <select id="analyticsApp"></select>
+            </label>
+
+            <label>Release
+                <select id="analyticsRelease">
+                    <option value="">All</option>
+                </select>
+            </label>
+            <label>From <input type="date" id="fromDate"></label>
+            <label>To <input type="date" id="toDate"></label>
+
+            <button id="loadChart" class="primary">Load</button>
+        </div>
+
+        <div class="chart-box">
+            <canvas id="analyticsChart"></canvas>
+        </div>
+    </section>
+
+</main>
+
+<div id="toast" class="hidden"></div>
+<script src="/js/app.js"></script>
+</body>
+</html>
