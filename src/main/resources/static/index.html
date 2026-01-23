@@ -13,11 +13,22 @@
 <body>
 <aside class="sidebar">
     <div class="logo-mini">LimeLight</div>
+
     <ul>
-        <li class="active">Dashboard</li>
-        <li id="openAnalytics">Analytics</li>
+        <li class="active">
+            <a href="/">Home</a>
+        </li>
+
+        <li>
+            <a href="/analytics.html">Dashboard</a>
+        </li>
+
+        <li>
+            <a href="#" id="openAnalytics">Analytics</a>
+        </li>
     </ul>
 </aside>
+
 
 <main class="main-content">
 
@@ -48,7 +59,8 @@
             <table id="runsTable">
                 <thead>
                 <tr>
-                    <th>Run</th><th>Date</th><th>PASS</th><th>FAIL</th><th>BROKEN</th><th>SKIP</th><th>Total</th><th>Duration</th><th></th>
+                    <th>Run</th><th>Date</th><th>PASS</th><th>FAIL</th><th>BROKEN</th>
+                    <th>SKIP</th><th>Total</th><th>Duration</th><th></th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -64,9 +76,20 @@
         <iframe id="reportFrame"></iframe>
     </section>
 
+    <section class="card">
+        <h3>🗑 Delete Data</h3>
+        <div class="filters">
+            <label>App <select id="deleteApp"></select></label>
+            <label>Release <select id="deleteRelease"></select></label>
+            <label>Run ID <select id="deleteRun"></select></label>
+            <button id="deleteRunBtn" class="secondary">Delete Run</button>
+            <button id="deleteReleaseBtn" class="secondary">Delete Release</button>
+            <button id="deleteAppBtn" class="secondary">Delete App</button>
+        </div>
+    </section>
+
     <section id="analyticsSection" class="card hidden">
         <h3>📊 Analytics</h3>
-
         <div class="filters">
             <label>Chart
                 <select id="chartType">
@@ -74,19 +97,10 @@
                     <option value="appOverview">App Overview</option>
                 </select>
             </label>
-
-            <label>App
-                <select id="analyticsApp"></select>
-            </label>
-
-            <label>Release
-                <select id="analyticsRelease">
-                    <option value="">All</option>
-                </select>
-            </label>
+            <label>App <select id="analyticsApp"></select></label>
+            <label>Release <select id="analyticsRelease"></select></label>
             <label>From <input type="date" id="fromDate"></label>
             <label>To <input type="date" id="toDate"></label>
-
             <button id="loadChart" class="primary">Load</button>
         </div>
 

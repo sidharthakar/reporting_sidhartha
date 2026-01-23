@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Analytics | Lightning Dashboard</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<aside class="sidebar">
+    <div class="logo-mini">LimeLight</div>
+
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+
+        <li class="active">
+            <a href="/analytics.html">Dashboard</a>
+        </li>
+    </ul>
+</aside>
+
+
+<main class="main-content">
+
+    <section class="card">
+        <h3>📊 Analytics</h3>
+
+        <div class="filters">
+            <label>Chart
+                <select id="chartType">
+                    <option value="releaseTrend">Release Trend</option>
+                    <option value="appOverview">App Overview</option>
+                </select>
+            </label>
+
+            <label>App
+                <select id="analyticsApp"></select>
+            </label>
+
+            <label>Release
+                <select id="analyticsRelease"></select>
+            </label>
+
+            <label>From <input type="date" id="fromDate"></label>
+            <label>To <input type="date" id="toDate"></label>
+
+            <button id="loadChart" class="primary">Load</button>
+        </div>
+
+        <div class="chart-box">
+            <canvas id="analyticsChart"></canvas>
+        </div>
+    </section>
+
+</main>
+
+<div id="toast" class="hidden"></div>
+<script src="/js/analytics.js"></script>
+</body>
+</html>
