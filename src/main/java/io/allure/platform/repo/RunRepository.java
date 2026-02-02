@@ -174,6 +174,61 @@ public class RunRepository {
         ORDER BY execution_date
         """, appId, release, from.toString(), to.toString());
     }
+    public List<Map<String, Object>> bugStatus(String appId, String release) {
+        return jdbc.queryForList("""
+        SELECT 'Open' AS status, SUM(failed) AS count
+        FROM runs
+        WHERE app_id = ? AND release = ?
+
+        UNION ALL
+
+        SELECT 'In Progress', SUM(broken)
+        FROM runs
+        WHERE app_id = ? AND release = ?
+
+        UNION ALL
+
+        SELECT 'Closed', SUM(passed)
+        FROM runs
+        WHERE app_id = ? AND release = ?
+    """,
+                appId, release,
+                appId, release,
+                appId, release
+        );
+    }
+    public List<Map<String, Object>> bugReporter(String appId, String release) {
+        return jdbc.queryForList("""
+        SELECT 'Development Team' AS reporter, SUM(failed) AS count
+        FROM runs
+        WHERE app_id = ? AND release = ?
+
+        UNION ALL
+
+        SELECT 'QA Team', SUM(broken)
+        FROM runs
+        WHERE app_id = ? AND release = ?
+
+        UNION ALL
+
+        SELECT 'Automation', SUM(skipped)
+        FROM runs
+        WHERE app_id = ? AND release = ?
+    """,
+                appId, release,
+                appId, release,
+                appId, release
+        );
+    }
+    public List<Map<String, Object>> bugTypes(String appId, String release) {
+        return jdbc.queryForList("""
+      SELECT 'Functional' AS type, SUM(failed) AS count FROM runs WHERE app_id=? AND release=?
+      UNION ALL
+      SELECT 'Logical', SUM(broken) FROM runs WHERE app_id=? AND release=?
+      UNION ALL
+      SELECT 'System', SUM(skipped) FROM runs WHERE app_id=? AND release=?
+    """, appId, release, appId, release, appId, release);
+    }
 
 
 }

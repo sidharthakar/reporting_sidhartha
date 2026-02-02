@@ -31,6 +31,33 @@ public class ChartController {
                 LocalDate.parse(to)
         );
     }
+    // Types of Bugs (Pie)
+    @GetMapping("/bugs/type")
+    public List<Map<String, Object>> bugTypes(
+            @RequestParam String appId,
+            @RequestParam String release) {
+
+        return repo.bugTypes(appId, release);
+    }
+
+    // Status Defects (Doughnut)
+    @GetMapping("/bugs/status")
+    public List<Map<String, Object>> bugStatus(
+            @RequestParam String appId,
+            @RequestParam String release) {
+
+        return repo.bugStatus(appId, release);
+    }
+
+    // Defects by Reporter (Horizontal Bar)
+    @GetMapping("/bugs/reporter")
+    public List<Map<String, Object>> bugReporter(
+            @RequestParam String appId,
+            @RequestParam String release) {
+
+        return repo.bugReporter(appId, release);
+    }
+
 
     // ================= RELEASE LEVEL =================
     @GetMapping("/release")
